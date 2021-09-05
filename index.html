@@ -1,0 +1,38 @@
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    // import { reactive, watchEffect } from './vue-demo.js'
+    // import hh from './node_modules/@vue/reactivity/index.js'
+    const hh = require('./node_modules/@vue/reactivity/index.js')
+    // import { reactive, watchEffect } from './node_modules/@vue/reactivity/index.js'
+    console.log(hh)
+
+    // let count = {
+    //   num: 0
+    // }
+    let count = reactive({
+      num: 0
+    })
+    // const logCount = () =>  {
+    //   console.log('=== get logcount ===', count.num)
+    // }
+    watchEffect(() => {
+      console.log('=== get logcount ===', count.num)
+    })
+
+    const addCount = () =>  {
+      count.num += 1
+      console.log('=== set addCount ===', count.num)
+    }
+
+    // logCount()
+    addCount()
+  </script>
+</body>
+</html>

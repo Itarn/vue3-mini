@@ -1,0 +1,41 @@
+Arguments: 
+  /opt/homebrew/Cellar/node/15.3.0/bin/node /opt/homebrew/Cellar/yarn/1.22.10/libexec/bin/yarn.js add @vue/reactive
+
+PATH: 
+  /opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/opt/homebrew/bin
+
+Yarn version: 
+  1.22.10
+
+Node version: 
+  15.3.0
+
+Platform: 
+  darwin arm64
+
+Trace: 
+  Error: https://registry.npm.taobao.org/@vue%2freactive: Not found
+      at Request.params.callback [as _callback] (/opt/homebrew/Cellar/yarn/1.22.10/libexec/lib/cli.js:66988:18)
+      at Request.self.callback (/opt/homebrew/Cellar/yarn/1.22.10/libexec/lib/cli.js:140749:22)
+      at Request.emit (node:events:376:20)
+      at Request.<anonymous> (/opt/homebrew/Cellar/yarn/1.22.10/libexec/lib/cli.js:141721:10)
+      at Request.emit (node:events:376:20)
+      at IncomingMessage.<anonymous> (/opt/homebrew/Cellar/yarn/1.22.10/libexec/lib/cli.js:141643:12)
+      at Object.onceWrapper (node:events:482:28)
+      at IncomingMessage.emit (node:events:388:22)
+      at endReadableNT (node:internal/streams/readable:1294:12)
+      at processTicksAndRejections (node:internal/process/task_queues:80:21)
+
+npm manifest: 
+  {
+    "name": "vue3-mini",
+    "version": "1.0.0",
+    "main": "index.js",
+    "license": "MIT"
+  }
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile
