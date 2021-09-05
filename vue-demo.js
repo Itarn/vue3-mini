@@ -19,6 +19,7 @@ function track (target, key) {
     // activeEffect.deps.push(dep)
   }
 }
+
 function trigger (target, key, val) {
   const desMap = targetMap.get(target, key)
   console.log(desMap)
@@ -45,31 +46,6 @@ function trigger (target, key, val) {
   effects.forEach(run)
 }
 
-export function reactive (obj) {
-  const proxy = new Proxy(obj,{
-    get (target, key, receiver) {
-      track(target, key)
-      return Reflect.get(...arguments)
-    },
-    set (target, key, val, receiver) {
-      trigger(target, key, val)
-      return Reflect.set(...arguments)
-    }
-  })
-  return proxy
-}
-
-export function watchEffect (fn, options) {
-  // const wrapped = function (...args) {
-  //   activeEffect = fn
-  //   fn(...args)
-  // }
-
-  const effect = createReactiveEffect(fn, options)
-
-  return effect
-}
-
 function createReactiveEffect (fn, options) {
   const effect = function reactiveEffect () {
     try {
@@ -90,5 +66,33 @@ function createReactiveEffect (fn, options) {
       activeEffect = effectStack[effectStack.length - 1]
     }
   }
+  return effect
+}
+
+export function reactive (obj) {
+  const proxy = new Proxy(obj,{
+    get (target, key, receiver) {
+      track(target, key)
+      return Reflect.get(...arguments)
+    },
+    set (target, key, val, receiver) {
+      const observed = Reflect.set(...arguments)
+      trigger(target, key, val)
+      return observed
+    }
+  })
+  return proxy
+}
+
+export function watchEffect (fn, options) {
+  // const wrapped = function (...args) {
+  //   activeEffect = fn
+  //   fn(...args)
+  // }
+
+  const effect = createReactiveEffect(fn, options)
+
+  effect()
+
   return effect
 }
