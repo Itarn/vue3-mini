@@ -12,10 +12,10 @@ let a = {
   num: 0
 }
 
- const b = function () {
-  // 条件 1. b 依赖 a
-   console.log('=== func b ===', a.num)
- }
+const b = function () {
+// 条件 1. b 依赖 a
+  console.log('=== func b ===', a.num)
+}
 
 // // 条件 2. a 发生变化了
 // a.num += 1
@@ -85,6 +85,7 @@ function watchEffect (fn) {
   return wrapped
 }
 
+// 下面是用户代码
 a = reactive({
   num: 0
 })
