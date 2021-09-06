@@ -1,5 +1,6 @@
 // 原始数据对象 map
 // 这里为什么用 WeakMap
+// https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/WeakMap
 const targetMap = new WeakMap()
 // 当期激活的 effect
 let activeEffect
@@ -36,6 +37,7 @@ function trigger (target, key, val) {
     })
   }
   // 为什么要用 void 0 替代 undefined
+  // https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Operators/void
   // https://github.com/lessfish/underscore-analysis/issues/1
   if (key !== void 0) {
     const activeEffects = desMap.get(key)
@@ -74,6 +76,7 @@ export function reactive (obj) {
   const proxy = new Proxy(obj,{
     get (target, key, receiver) {
       track(target, key)
+      // Reflect: https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Reflect
       return Reflect.get(...arguments) // 某个 key 的 val
     },
     set (target, key, val, receiver) {

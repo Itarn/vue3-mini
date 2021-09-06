@@ -7,6 +7,21 @@
 </head>
 <body>
   <script type="module">
+    // 标题：用不到百行代码说明 Vue3 响应式原理
+
+    // 什么是响应式？
+    // 当 b 依赖 a, a 变化时，b 也自动变化
+    // 1. 确定依赖关系 2. a 变化了
+
+    // 代码还原这个场景
+
+    // 观察 vue3 的用法，确定 demo 代码设计
+    // https://v3.cn.vuejs.org/api/computed-watch-api.html#watcheffect
+
+    // 前置知识
+    // proxy API
+    // https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Proxy
+
     import { reactive, watchEffect } from './vue-demo.js'
     // import hh from './node_modules/@vue/reactivity/index.js'
     // const hh = require('./node_modules/@vue/reactivity/index.js')
@@ -18,7 +33,7 @@
     // }
     let count = reactive({
       num: 0,
-      num1: 0
+      // num1: 0
     })
     const logCount = () =>  {
       // watchEffect(logCount2)
@@ -28,12 +43,12 @@
     // const logCount2 = () => {
     //   console.log('=== get logcount2 ===', count.num)
     // }
-    
+
     const addCount = () =>  {
       count.num += 1
       console.log('=== set addCount ===', count.num)
     }
-    
+
     watchEffect(logCount)
     // logCount()
     addCount()
