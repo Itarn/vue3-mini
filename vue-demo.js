@@ -72,7 +72,7 @@ function createReactiveEffect (fn, options) {
   return effect
 }
 
-export function reactive (obj) {
+function reactive (obj) {
   const proxy = new Proxy(obj,{
     get (target, key, receiver) {
       track(target, key)
@@ -88,7 +88,7 @@ export function reactive (obj) {
   return proxy
 }
 
-export function watchEffect (fn, options) {
+function watchEffect (fn, options) {
   // const wrapped = function (...args) {
   //   activeEffect = fn
   //   fn(...args)
@@ -100,3 +100,25 @@ export function watchEffect (fn, options) {
 
   return effect
 }
+
+let count = reactive({
+  num: 0,
+  // num1: 0
+})
+const logCount = () =>  {
+  // watchEffect(logCount2)
+  console.log('=== get logcount ===', count.num)
+}
+
+// const logCount2 = () => {
+//   console.log('=== get logcount2 ===', count.num)
+// }
+
+const addCount = () =>  {
+  count.num += 1
+  console.log('=== set addCount ===', count.num)
+}
+
+watchEffect(logCount)
+// logCount()
+addCount()
