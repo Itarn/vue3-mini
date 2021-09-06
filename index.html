@@ -17,20 +17,24 @@
     //   num: 0
     // }
     let count = reactive({
-      num: 0
+      num: 0,
+      num1: 0
     })
-    // const logCount = () =>  {
-    //   console.log('=== get logcount ===', count.num)
-    // }
-    watchEffect(() => {
+    const logCount = () =>  {
+      // watchEffect(logCount2)
       console.log('=== get logcount ===', count.num)
-    })
+    }
 
+    // const logCount2 = () => {
+    //   console.log('=== get logcount2 ===', count.num)
+    // }
+    
     const addCount = () =>  {
       count.num += 1
       console.log('=== set addCount ===', count.num)
     }
-
+    
+    watchEffect(logCount)
     // logCount()
     addCount()
   </script>

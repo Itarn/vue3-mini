@@ -1,9 +1,11 @@
 // 原始数据对象 map
+// 这里为什么用 WeakMap
 const targetMap = new WeakMap()
 // 当期激活的 effect
 let activeEffect
 const effectStack = []
 
+// 收集依赖
 function track (target, key) {
   let depsMap = targetMap.get(target)
   if (!depsMap) {
@@ -20,6 +22,7 @@ function track (target, key) {
   }
 }
 
+// 派发通知
 function trigger (target, key, val) {
   const desMap = targetMap.get(target, key)
   console.log(desMap)
@@ -46,12 +49,12 @@ function trigger (target, key, val) {
   effects.forEach(run)
 }
 
+// 创建副函数
 function createReactiveEffect (fn, options) {
   const effect = function reactiveEffect () {
     try {
-      // 开启全局 shouldTrack，允许依赖收集
-      // enableTracking()
       // 压栈
+      // console.log(effect)
       effectStack.push(effect)
       activeEffect = effect
       // 执行原始函数
@@ -60,8 +63,6 @@ function createReactiveEffect (fn, options) {
     finally {
       // 出栈
       effectStack.pop()
-      // 恢复 shouldTrack 开启之前的状态
-      // resetTracking()
       // 指向栈最后一个 effect
       activeEffect = effectStack[effectStack.length - 1]
     }
@@ -73,12 +74,12 @@ export function reactive (obj) {
   const proxy = new Proxy(obj,{
     get (target, key, receiver) {
       track(target, key)
-      return Reflect.get(...arguments)
+      return Reflect.get(...arguments) // 某个 key 的 val
     },
     set (target, key, val, receiver) {
       const observed = Reflect.set(...arguments)
       trigger(target, key, val)
-      return observed
+      return observed // boolean
     }
   })
   return proxy
