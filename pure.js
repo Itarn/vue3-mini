@@ -57,6 +57,10 @@ function reactive (obj) {
 }
 
 function track (target, key) {
+  if (!activeEffect) {
+    return
+  }
+
   let desMap = new Map()
   let effects = new Set()
 
@@ -77,7 +81,13 @@ function trigger (target, key) {
 
 function watchEffect (fn) {
   const wrapped = function () {
-    activeEffect = fn
+    try {
+      activeEffect = fn
+      return fn()
+    }
+    finally {
+      activeEffect = undefined
+    }
   }
 
   wrapped()
